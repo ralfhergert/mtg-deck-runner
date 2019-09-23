@@ -1,5 +1,6 @@
 package de.ralfhergert.mtg.model;
 
+import de.ralfhergert.generic.UnexpectedError;
 import de.ralfhergert.generic.cloning.Copyable;
 import de.ralfhergert.generic.cloning.CopyableList;
 import org.slf4j.Logger;
@@ -55,5 +56,16 @@ public class Game implements Copyable<Game> {
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
+    }
+
+    public Player getPlayer(Reference<Player> playerReference) {
+        return players.stream()
+            .filter(player -> player.getReference().equals(playerReference))
+            .findFirst()
+            .orElseThrow(() -> new UnexpectedError("could not find referenced player"));
+    }
+
+    public void setLoser(Reference<Player> playerReference) {
+        throw new UnsupportedOperationException("not yet implemented");
     }
 }
