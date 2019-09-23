@@ -4,9 +4,6 @@ import de.ralfhergert.mtg.model.Game;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collection;
-import java.util.Collections;
-
 public class StartNormalGameAction extends Action {
 
     private static final Logger LOG = LoggerFactory.getLogger(StartNormalGameAction.class);
@@ -20,22 +17,5 @@ public class StartNormalGameAction extends Action {
         LOG.trace("ensuring both players have a startingHandSize of 7");
         clone.getPlayers().forEach(player -> player.setStartingHandSize(7));
         return clone;
-    }
-
-    @Override
-    public ActionFactory getFactory() {
-        return new StartGameActionFactory();
-    }
-
-    private static class StartGameActionFactory implements ActionFactory {
-        @Override
-        public Collection<Action> getPossibleActions(Game game) {
-            if (game.getState() == Game.State.SETUP &&
-                game.getGameMode() == Game.GameMode.NORMAL &&
-                game.getPlayers().size() == 2) {
-                return Collections.singleton(new StartNormalGameAction());
-            }
-            return Collections.emptyList();
-        }
     }
 }

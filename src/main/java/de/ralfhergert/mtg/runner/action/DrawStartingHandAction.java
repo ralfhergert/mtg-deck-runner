@@ -18,10 +18,4 @@ public class DrawStartingHandAction extends Action {
         clone.getPlayers().forEach(player -> player.setStartingHandSize(7));
         return clone;
     }
-
-    @Override
-    public ActionFactory getFactory() {
-        return new DrawStartingHandActionFactory();
-    }
-
 }
