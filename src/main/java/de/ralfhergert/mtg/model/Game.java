@@ -28,6 +28,12 @@ public class Game implements Copyable<Game> {
     private State state = State.SETUP;
     private CopyableList<Player> players = new CopyableList<>();
 
+    private Reference<Player> startingPlayer;
+    private Reference<Player> activePlayer;
+    private int turn;
+    private Phase phase;
+    private Step step;
+
     @Override
     public Game deepCopy() {
         final Game game = new Game();
@@ -67,5 +73,45 @@ public class Game implements Copyable<Game> {
 
     public void setLoser(Reference<Player> playerReference) {
         throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    public Reference<Player> getStartingPlayer() {
+        return startingPlayer;
+    }
+
+    public void setStartingPlayer(Reference<Player> startingPlayer) {
+        this.startingPlayer = startingPlayer;
+    }
+
+    public Reference<Player> getActivePlayer() {
+        return activePlayer;
+    }
+
+    public void setActivePlayer(Reference<Player> activePlayer) {
+        this.activePlayer = activePlayer;
+    }
+
+    public int getTurn() {
+        return turn;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
+
+    public Phase getPhase() {
+        return phase;
+    }
+
+    public void setPhase(Phase phase) {
+        this.phase = phase;
+    }
+
+    public Step getStep() {
+        return step;
+    }
+
+    public void setStep(Step step) {
+        this.step = step;
     }
 }
