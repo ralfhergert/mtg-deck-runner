@@ -4,9 +4,9 @@ import de.ralfhergert.mtg.model.Game;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class StartNormalGameAction extends Action {
+public class StartDrawingOpeningHandsAction extends Action {
 
-    private static final Logger LOG = LoggerFactory.getLogger(StartNormalGameAction.class);
+    private static final Logger LOG = LoggerFactory.getLogger(StartDrawingOpeningHandsAction.class);
 
     @Override
     public Game apply(Game game) {

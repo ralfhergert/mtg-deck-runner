@@ -12,7 +12,7 @@ class StartGameActionFactory implements ActionFactory {
         if (game.getState() == Game.State.SETUP &&
             game.getGameMode() == Game.GameMode.NORMAL &&
             game.getPlayers().size() == 2) {
-            return Collections.singleton(new StartNormalGameAction());
+            return Collections.singleton(new StartDrawingOpeningHandsAction());
         }
         return Collections.emptyList();
     }
