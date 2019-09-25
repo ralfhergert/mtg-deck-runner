@@ -3,11 +3,13 @@ package de.ralfhergert.mtg.model;
 import de.ralfhergert.generic.UnexpectedError;
 import de.ralfhergert.generic.cloning.Copyable;
 import de.ralfhergert.generic.cloning.CopyableList;
+import de.ralfhergert.generic.cloning.CopyableStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 public class Game implements Copyable<Game> {
 
@@ -27,6 +29,8 @@ public class Game implements Copyable<Game> {
     private GameMode gameMode = GameMode.NORMAL;
     private State state = State.SETUP;
     private CopyableList<Player> players = new CopyableList<>();
+
+    private CopyableStack<? extends Resolvable> stack = new CopyableStack<>();
 
     private Reference<Player> startingPlayer;
     private Reference<Player> activePlayer;
@@ -113,5 +117,9 @@ public class Game implements Copyable<Game> {
 
     public void setStep(Step step) {
         this.step = step;
+    }
+
+    public Stack getStack() {
+        return stack;
     }
 }

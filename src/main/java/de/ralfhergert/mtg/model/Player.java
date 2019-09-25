@@ -1,5 +1,7 @@
 package de.ralfhergert.mtg.model;
 
+import de.ralfhergert.generic.StreamConcatenation;
+import de.ralfhergert.generic.UnexpectedError;
 import de.ralfhergert.generic.cloning.Copyable;
 import de.ralfhergert.generic.cloning.CopyableList;
 import de.ralfhergert.mtg.ai.PlayerAI;
@@ -22,6 +24,7 @@ public class Player implements Copyable<Player> {
 
     private CopyableList<Card> library = new CopyableList<>();
     private CopyableList<Card> hand = new CopyableList<>();
+    private CopyableList<Permanent> battleField = new CopyableList<>();
 
     public Player() {
         this(new Reference<>(Player.class));
@@ -42,6 +45,7 @@ public class Player implements Copyable<Player> {
         player.hasPlayedLandThisTurn = hasPlayedLandThisTurn;
         player.library = library.deepCopy();
         player.hand = hand.deepCopy();
+        player.battleField = battleField.deepCopy();
         return new Player();
     }
 
@@ -95,11 +99,22 @@ public class Player implements Copyable<Player> {
         this.hasPlayedLandThisTurn = hasPlayedLandThisTurn;
     }
 
+    public Card getCard(final Reference<Card> cardReference) {
+        return StreamConcatenation.of(hand.stream(), library.stream())
+            .filter(card -> card.getReference().equals(cardReference))
+            .findFirst()
+            .orElseThrow(() -> new UnexpectedError("could not find referenced card"));
+    }
+
     public CopyableList<Card> getLibrary() {
         return library;
     }
 
     public CopyableList<Card> getHand() {
         return hand;
+    }
+
+    public CopyableList<Permanent> getBattleField() {
+        return battleField;
     }
 }
