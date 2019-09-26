@@ -4,7 +4,7 @@ import de.ralfhergert.generic.cloning.Copyable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Card implements Copyable<Card> {
+public class Card implements Copyable<Card>, Referenceable<Card> {
 
     public enum Type {
         Land

@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public class Game implements Copyable<Game> {
 
@@ -75,6 +77,13 @@ public class Game implements Copyable<Game> {
             .orElseThrow(() -> new UnexpectedError("could not find referenced player"));
     }
 
+    public Player findPlayer(Predicate<Player> playerPredicate) {
+        return players.stream()
+            .filter(playerPredicate)
+            .findFirst()
+            .orElseThrow(() -> new UnexpectedError("could not find player by predicate"));
+    }
+
     public void setLoser(Reference<Player> playerReference) {
         throw new UnsupportedOperationException("not yet implemented");
     }
@@ -121,5 +130,9 @@ public class Game implements Copyable<Game> {
 
     public Stack getStack() {
         return stack;
+    }
+
+    public Stream<Permanent> getAllPermanents() {
+        return players.stream().flatMap(player -> player.getBattleField().stream());
     }
 }

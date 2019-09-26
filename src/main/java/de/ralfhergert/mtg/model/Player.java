@@ -8,7 +8,7 @@ import de.ralfhergert.mtg.ai.PlayerAI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Player implements Copyable<Player> {
+public class Player implements Copyable<Player>, Referenceable<Player> {
 
     private static final Logger LOG = LoggerFactory.getLogger(Player.class);
 
@@ -21,6 +21,7 @@ public class Player implements Copyable<Player> {
     private int startingHandSize = 7;
     private boolean hasOpeningHand;
     private boolean hasPlayedLandThisTurn;
+    private ManaPool manaPool = new ManaPool();
 
     private CopyableList<Card> library = new CopyableList<>();
     private CopyableList<Card> hand = new CopyableList<>();
@@ -43,6 +44,7 @@ public class Player implements Copyable<Player> {
         player.startingHandSize = startingHandSize;
         player.hasOpeningHand = hasOpeningHand;
         player.hasPlayedLandThisTurn = hasPlayedLandThisTurn;
+        player.manaPool = manaPool.deepCopy();
         player.library = library.deepCopy();
         player.hand = hand.deepCopy();
         player.battleField = battleField.deepCopy();
@@ -104,6 +106,10 @@ public class Player implements Copyable<Player> {
             .filter(card -> card.getReference().equals(cardReference))
             .findFirst()
             .orElseThrow(() -> new UnexpectedError("could not find referenced card"));
+    }
+
+    public ManaPool getManaPool() {
+        return manaPool;
     }
 
     public CopyableList<Card> getLibrary() {

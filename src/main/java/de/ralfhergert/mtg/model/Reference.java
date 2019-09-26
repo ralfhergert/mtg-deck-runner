@@ -3,8 +3,9 @@ package de.ralfhergert.mtg.model;
 import de.ralfhergert.generic.cloning.Copyable;
 
 import java.util.Objects;
+import java.util.function.Predicate;
 
-public class Reference<T> implements Copyable<Reference<T>> {
+public class Reference<T extends Referenceable<T>> implements Copyable<Reference<T>> {
 
     private static int next = 1;
 
@@ -27,6 +28,10 @@ public class Reference<T> implements Copyable<Reference<T>> {
 
     public Class<T> getType() {
         return type;
+    }
+
+    public Predicate<T> asPredicate() {
+        return t -> t.getReference().equals(this);
     }
 
     @Override

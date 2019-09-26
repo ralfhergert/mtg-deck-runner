@@ -2,10 +2,19 @@ package de.ralfhergert.mtg.model;
 
 import de.ralfhergert.generic.cloning.Copyable;
 
-public class Ability implements Copyable<Ability> {
+public abstract class Ability<T extends Ability<T>> implements Copyable<T>, Referenceable<T> {
 
-    @Override
-    public Ability deepCopy() {
-        return null;
+    private final Reference<T> reference;
+
+    protected Ability(final Reference<T> reference) {
+        this.reference = reference;
     }
+
+    public Reference<T> getReference() {
+        return reference;
+    }
+
+    public abstract boolean areRequirementsMet(Game game);
+
+    public abstract Game apply(Game game);
 }
