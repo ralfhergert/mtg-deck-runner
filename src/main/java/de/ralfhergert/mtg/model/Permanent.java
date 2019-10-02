@@ -6,9 +6,6 @@ import de.ralfhergert.generic.cloning.CopyableList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 public class Permanent implements Copyable<Permanent>, Referenceable<Permanent> {
 
