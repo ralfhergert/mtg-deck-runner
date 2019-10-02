@@ -1,6 +1,7 @@
 package de.ralfhergert.mtg.runner.action;
 
 import de.ralfhergert.mtg.model.*;
+import de.ralfhergert.mtg.skill.CreateAsPermanent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,11 +25,9 @@ public class PlayLandAction extends PlayerChoiceAction {
         if (!player.getHand().remove(card)) {
             throw new AssertionError("referenced card was not in the player's hands");
         }
-        if (card instanceof CanCreatePermanents) {
-            player.getBattleField().addAll(((CanCreatePermanents)card).createPermanents());
-        } else {
-            throw new AssertionError("referenced card can not create permanents");
-        }
+        card.getSkills(skill -> skill instanceof CreateAsPermanent)
+            .forEach(skill -> player.getBattleField().add(((CreateAsPermanent)skill).asPermanent(card)));
+
         player.setHasPlayedLandThisTurn(true);
         return clone;
     }

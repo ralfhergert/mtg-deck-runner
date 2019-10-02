@@ -3,7 +3,12 @@ package de.ralfhergert.mtg.model;
 import de.ralfhergert.generic.cloning.Copyable;
 import de.ralfhergert.generic.cloning.CopyableList;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class Permanent implements Copyable<Permanent>, Referenceable<Permanent> {
 
@@ -17,6 +22,8 @@ public class Permanent implements Copyable<Permanent>, Referenceable<Permanent> 
     private Type type;
     private CopyableList<? extends Ability> abilities = new CopyableList<>();
     private boolean isTapped = false;
+
+    private Card createdFromCard;
 
     public Permanent() {
         this(new Reference<>(Permanent.class));
@@ -38,6 +45,7 @@ public class Permanent implements Copyable<Permanent>, Referenceable<Permanent> 
         clone.type = type;
         clone.abilities = abilities.deepCopy();
         clone.isTapped = isTapped;
+        clone.createdFromCard = createdFromCard.deepCopy();
         return clone;
     }
 
@@ -49,23 +57,42 @@ public class Permanent implements Copyable<Permanent>, Referenceable<Permanent> 
         return name;
     }
 
-    public void setName(String name) {
+    public Permanent setName(String name) {
         this.name = name;
+        return this;
     }
 
     public Type getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public Permanent setType(Type type) {
         this.type = type;
+        return this;
     }
 
     public boolean isTapped() {
         return isTapped;
     }
 
-    public void setTapped(boolean tapped) {
+    public Permanent setTapped(boolean tapped) {
         isTapped = tapped;
+        return this;
+    }
+
+    public Permanent addAbility(Ability ability) {
+        List<Ability> abilitiesList = new ArrayList<>(abilities);
+        abilitiesList.add(ability);
+        abilities = new CopyableList<>(abilitiesList);
+        return this;
+    }
+
+    public Card getCreatedFromCard() {
+        return createdFromCard;
+    }
+
+    public Permanent setCreatedFromCard(Card createdFromCard) {
+        this.createdFromCard = createdFromCard;
+        return this;
     }
 }

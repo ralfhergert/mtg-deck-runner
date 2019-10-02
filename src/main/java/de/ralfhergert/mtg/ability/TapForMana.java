@@ -15,6 +15,24 @@ public class TapForMana extends Ability<TapForMana> {
         super(reference);
     }
 
+    public int getAmount() {
+        return amount;
+    }
+
+    public TapForMana setAmount(int amount) {
+        this.amount = amount;
+        return this;
+    }
+
+    public ManaType getManaType() {
+        return manaType;
+    }
+
+    public TapForMana setManaType(ManaType manaType) {
+        this.manaType = manaType;
+        return this;
+    }
+
     @Override
     public TapForMana deepCopy() {
         TapForMana clone = new TapForMana(getReference());

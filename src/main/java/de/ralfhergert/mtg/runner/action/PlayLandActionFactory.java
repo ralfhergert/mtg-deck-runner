@@ -23,7 +23,7 @@ public class PlayLandActionFactory implements ActionFactory {
             final Player activePlayer = game.getPlayer(game.getActivePlayer());
             if (!activePlayer.hasPlayedLandThisTurn()) {
                 return activePlayer.getHand().stream()
-                    .filter(card -> card.getType() == Card.Type.Land)
+                    .filter(card -> card.isType(Card.Type.Land))
                     .map(card -> new PlayLandAction(activePlayer.getReference(), card.getReference()))
                     .collect(Collectors.toList());
             }

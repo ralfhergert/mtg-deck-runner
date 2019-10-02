@@ -8,7 +8,7 @@ public class CopyableList<T extends Copyable<T>> extends ArrayList<T> implements
 
     public CopyableList() {}
 
-    public CopyableList(Collection<? extends T> c) {
+    public CopyableList(Collection<T> c) {
         super(c);
     }
 
